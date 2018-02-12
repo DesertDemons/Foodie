@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Foodhub</title>
+</head>
+<body>
+	<h1><strong>The List of Restaurants :</strong></h1>
+	{% for item in restaurants %}
+	<hr style="height:2px;background-color:black;border:none;" noshade />
+	<ul>
+	<!--<a href="{% url 'restaurants_menu' Restaurant_id=item.id %}></a>"  instead of using this to go to details of restaurants I'm using Model method url -->
+		<a href="{{item.get_absolute_url}}"><li>Titel : {{item.name}}</li>
+		<li>{{item.description}}</li>
+		<li>{{item.established}}</li>
+		<li>{{item.id}}</li></a>
+	</ul>
+	<hr style="height:2px;background-color:black;border:none;" noshade />
+	{% endfor %}
+	<!-- <a href="{{object.get_absolute_url}}">{{item.name}}</a> -->
+	<!-- <h1>{{Menu}}</h1>
+	<h3>{{dishes}}</h3> 
+	<h3>{{drinks}}</h3>
+	<h3>{{desserts}}</h3> -->
+</body>
+</html>
