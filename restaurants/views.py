@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Restaurant
-
+from .forms import RestaurantForm
 # Create your views here.
 def menu(request):
 	context = {
@@ -47,3 +47,38 @@ def main_dish(request, Restaurant_id):
 	# 	"Fish": "always a choice if you don't know how to pick a dish"
 	# }
 	return render(request, 'main_dish.html', context)
+
+def create(request):
+	form = RestaurantForm()
+	if request.method == "POST":
+		form = RestaurantForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect("restaurants_list")
+	context = {
+		"form": form,
+	}
+	return render(request, 'create_rest.html', context)
+
+def update(request, Restaurant_id):
+	restaurant_obj = Restaurant.objects.get(id=Restaurant_id)
+	form = RestaurantForm(instance=restaurant_obj)
+	if request.method == "POST":
+		form = RestaurantForm(request.POST, instance=restaurant_obj)
+		if form.is_valid():
+			form.save()
+			return redirect("restaurants_menu", Restaurant_id=restaurant_obj.id)
+	context = {
+		"form": form,
+		"obj": restaurant_obj,
+	}
+	return render(request, 'update_rest.html', context)
+
+def delete(request, Restaurant_id):
+	Restaurant.objects.get(id=Restaurant_id).delete()
+	messages.success(request, "Successfully Deleted!")
+	# restaurant_obj = Restaurant.objects.get(id=Restaurant_id)
+	# restaurant_obj.delete()
+
+	return redirect("restaurants_list")
+	

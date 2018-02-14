@@ -1,0 +1,14 @@
+
+{% extends "base.html" %}
+
+{% block tilte %}
+Create Restaurant
+{% endblock %}
+
+{% block content %}
+	<form action="{% url 'create_rest' %}" method="POST">
+		{% csrf_token %}
+		{{form.as_p}}
+		<input type="submit" name="Create">
+	</form>
+{% endblock content %}

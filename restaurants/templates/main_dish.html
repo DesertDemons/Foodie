@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Foodhub</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block tilte %}
+Foodhub
+{% endblock %}
+
+{% block content %}
 	<h1><strong>The List of Dishes :</strong></h1>
 	<hr style="height:2px;background-color:black;border:none;" noshade />
 	{{details}}
@@ -15,5 +16,4 @@
 	<h4>{{Steaks}}</h1>
 	<h1><strong>Fish</strong></h4>
 	<h4>{{Fish}}</h1> -->
-</body>
-</html>
+{% endblock content %}

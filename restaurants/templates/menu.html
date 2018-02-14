@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Foodhub</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block tilte %}
+Foodhub
+{% endblock %}
+
+{% block content %}
 	<h1><strong>The List of Restaurants :</strong></h1>
 	{% for item in restaurants %}
 	<hr style="height:2px;background-color:black;border:none;" noshade />
@@ -14,12 +15,23 @@
 		<li>{{item.established}}</li>
 		<li>{{item.id}}</li></a>
 	</ul>
+	<ul>
+		<li><h4>[<a href="{% url 'update_rest' Restaurant_id=item.id %}">Click to Update</a>] [<a href="{% url 'delete_rest' Restaurant_id=item.id %}">Click to Delete</a>]</h4></li>
+	</ul>
 	<hr style="height:2px;background-color:black;border:none;" noshade />
 	{% endfor %}
+	{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+	<br>
+	<a href="{% url 'create_rest' %}"><strong>[Add Restaurants!]</strong></a>
 	<!-- <a href="{{object.get_absolute_url}}">{{item.name}}</a> -->
 	<!-- <h1>{{Menu}}</h1>
 	<h3>{{dishes}}</h3> 
 	<h3>{{drinks}}</h3>
 	<h3>{{desserts}}</h3> -->
-</body>
-</html>
+{% endblock content %}
