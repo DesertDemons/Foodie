@@ -26,4 +26,8 @@ urlpatterns = [
     path('update/<int:Restaurant_id>/', views.update, name="update_rest"),
     path('delete/<int:Restaurant_id>/', views.delete, name="delete_rest"),
     #url(r'^admin/', admin.site.urls),
+    # urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]
+# if settings.DEBUG:
+#     # urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+#     urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

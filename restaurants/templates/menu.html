@@ -1,37 +1,45 @@
 {% extends "base.html" %}
 
 {% block tilte %}
-Foodhub
+Foodhub List
 {% endblock %}
 
 {% block content %}
-	<h1><strong>The List of Restaurants :</strong></h1>
-	{% for item in restaurants %}
-	<hr style="height:2px;background-color:black;border:none;" noshade />
-	<ul>
-	<!--<a href="{% url 'restaurants_menu' Restaurant_id=item.id %}></a>"  instead of using this to go to details of restaurants I'm using Model method url -->
-		<a href="{{item.get_absolute_url}}"><li>Titel : {{item.name}}</li>
-		<li>{{item.description}}</li>
-		<li>{{item.established}}</li>
-		<li>{{item.id}}</li></a>
-	</ul>
-	<ul>
-		<li><h4>[<a href="{% url 'update_rest' Restaurant_id=item.id %}">Click to Update</a>] [<a href="{% url 'delete_rest' Restaurant_id=item.id %}">Click to Delete</a>]</h4></li>
-	</ul>
-	<hr style="height:2px;background-color:black;border:none;" noshade />
-	{% endfor %}
-	{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-	<br>
-	<a href="{% url 'create_rest' %}"><strong>[Add Restaurants!]</strong></a>
-	<!-- <a href="{{object.get_absolute_url}}">{{item.name}}</a> -->
-	<!-- <h1>{{Menu}}</h1>
-	<h3>{{dishes}}</h3> 
-	<h3>{{drinks}}</h3>
-	<h3>{{desserts}}</h3> -->
-{% endblock content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-12 col-md-12">
+			<div class="mx-auto mt-3" style="width: 300px;">
+				<figure class="figure">
+					<img src="https://lh3.googleusercontent.com/s6FHg1NWwX1xpeuzGXzAt56KiwFjRgt2tYDlFe-okstp3ySAHbxKrF8tEuqiS4hl4i4=w300" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+						<figcaption class="figure-caption text-center">CODED Django project</figcaption>
+				</figure>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		{% for item in restaurants %}
+		<div class="col-xl-3 mt-3">
+				<div class="card text-center mt-3 mr-3">
+					<div class="card-body">
+						<h5 class="card-title"><a href="{{item.get_absolute_url}}">Titel : {{item.name}}</a></h5>
+						<p class="card-text">{{item.description}}</p>
+						<p class="card-text"><small class="text-muted">{{item.established}}</small></p>
+						<a href="{% url 'update_rest' Restaurant_id=item.id %}" class="btn btn-primary" data-toggle="tooltip" data-placement="buttom" title="To update Restaurant's info">UPDATE</a>
+						<a href="{% url 'delete_rest' Restaurant_id=item.id %}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="To Delete this Restaurant">DELETE</a>
+					</div>
+					
+				</div>
+		</div>
+		{% endfor %}
+	</div>
+	<div class="row">
+		<div class="col-sm-12 col-md-12 col-lg-12 mt-5 mb-5">
+			<div class="mx-auto" style="width: 200px;">
+				<a href="{% url 'create_rest' %}"><button type="button" class="btn btn-primary">Add New Restaurant</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

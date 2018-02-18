@@ -5,11 +5,24 @@ Foodhub
 {% endblock %}
 
 {% block content %}
-	<h1><strong>The List of Dishes :</strong></h1>
-	<hr style="height:2px;background-color:black;border:none;" noshade />
-	{{details}}
-	<hr style="height:2px;background-color:black;border:none;" noshade />
-	<a href="{% url 'restaurants_list' %}">"Back"</a>
+	<div class="col-md-12">
+		<h1><strong>More Details :</strong></h1>
+	</div>
+	<div class="col-md-12">
+		<hr style="height:2px;background-color:black;border:none;" noshade />
+	<!-- {% if instance.image %}
+        <img src="{{details.image.url}}" alt="" class="img-fluid">
+    {% endif %} -->
+    	
+    	
+		<!-- {{details}} -->
+		<h4>Restaurant name : {{details.name}}</h4>
+		
+		<hr style="height:2px;background-color:black;border:none;" noshade />
+	</div>
+	<div class="col-md-12">
+		<a href="{% url 'restaurants_list' %}"><button type="button" class="btn btn-primary">Back</button></a>
+	</div>
 	<!-- <h1><strong>Chicken</strong></h4>
 	<h4>{{Chicken}}</h1>
 	<h1><strong>Steaks</strong></h4>

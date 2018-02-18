@@ -76,7 +76,7 @@ def update(request, Restaurant_id):
 
 def delete(request, Restaurant_id):
 	Restaurant.objects.get(id=Restaurant_id).delete()
-	messages.success(request, "Successfully Deleted!")
+	# messages.success(request, "Successfully Deleted!")
 	# restaurant_obj = Restaurant.objects.get(id=Restaurant_id)
 	# restaurant_obj.delete()
 
