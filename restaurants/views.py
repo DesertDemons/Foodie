@@ -56,8 +56,8 @@ def menu(request):
 	# }
 	return render(request, 'menu.html', context)
 
-def main_dish(request, Restaurant_id, item_id):
-	item = I
+def main_dish(request, Restaurant_id):
+	# item = Item.objects.get(id=item_id)
 	context = {
 		"details": Restaurant.objects.get(id=Restaurant_id),
 	}
