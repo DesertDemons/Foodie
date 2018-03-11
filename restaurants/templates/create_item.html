@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block tilte %}
+Create Item
+{% endblock %}
+
+{% block content %}
+<div class="container">
+	<br>
+	<h2> Adding an item to a restaurant :</h2>
+	<br>
+	<br>
+	<form action="{% url 'create_item' %}" method="POST">
+		{% csrf_token %}
+		{{form|crispy}}
+		<input type="submit" name="Create">
+	</form>
+</div>
+{% endblock content %}

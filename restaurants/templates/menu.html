@@ -1,13 +1,51 @@
 {% extends "base.html" %}
+{% load static %}
+
 
 {% block tilte %}
 Foodhub List
 {% endblock %}
 
-{% block content %}
 
-<div class="container">
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-danger text-white border border-primary">
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <!-- <a class="navbar-brand bg-primary pl-1 pr-1 text-white">FoodHub Project</a> -->
+
+	  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+	    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+	      <li class="nav-item active">
+	        <a class="nav-link text-white btn btn-primary" href="{% url 'restaurants_list' %}"> <strong>FoodHub Project</strong> <span class="sr-only">(current)</span></a>
+	      </li>
+	      {% if not user.is_authenticated %}
+	      <li class="nav-item">
+	        <a class="nav-link text-white btn btn-primary ml-3" href="{% url 'register' %}">Register</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link text-white btn btn-primary ml-3" href="{% url 'login' %}">Login</a>
+	      </li>
+	      {% else %}
+	      <li class="nav-item">
+	        <a class="nav-link text-white btn btn-primary ml-3" href="{% url 'logout' %}">Logout</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link text-white btn btn-primary ml-3">User Name : {{user.username}}</a>
+	      </li>
+	      {% endif %}
+	    </ul>
+	    <form class="form-inline my-2 my-lg-0 action="{% url 'restaurants_list' %}"" method="GET"">
+	      <input class="form-control mr-sm-2" type="search" placeholder="Search for..." aria-label="Search" name="q">
+	      <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+	    </form>
+	  </div>
+	</nav>
+<div class="container bg-light">
 	<div class="row">
+		<!-- <div class="col-sm-12 col-md-12">
+			<img class="mx-auto d-block" src="{% static '/img/profile.png' %}" width="%100" height="350px">
+		</div> -->
 		<div class="col-sm-12 col-md-12">
 			<div class="mx-auto mt-3" style="width: 300px;">
 				<figure class="figure">
@@ -18,20 +56,28 @@ Foodhub List
 		</div>
 	</div>
 	
+	
+
 	<div class="row">
 		{% for item in restaurants %}
-		<div class="col-xl-3 mt-3">
-				<div class="card text-center mt-3 mr-3">
+			<div class="col-xl-3 mt-3">
+				<div class="card text-center mt-3 mr-3 h-100 border-info">
 					<div class="card-body">
-						<h5 class="card-title"><a href="{{item.get_absolute_url}}">Titel : {{item.name}}</a></h5>
+						<h5 class="card-title border border-primary"><a href="{{item.get_absolute_url}}">{{item.name}}</a></h5>
 						<p class="card-text">{{item.description}}</p>
-						<p class="card-text"><small class="text-muted">{{item.established}}</small></p>
+						<p class="card-text p-3 mb-2 bg-info text-white">Owned By : {{item.owner.username}}</p>
+						<p class="card-text"><small class="text-muted">established: {{item.established}}</small></p>
+						<button class="btn btn-light" onclick="Favourite({{item.id}})">
+							<span id="fav-count-{{item.id}}">{{item.favrest_set.count}}</span>
+							<i id="fav-color-{{item.id}}" class="fas fa-star {% if item in fav_list %} text-warning {% endif %}"></i>
+						</button><br>
+						<P>  </P>
 						<a href="{% url 'update_rest' Restaurant_id=item.id %}" class="btn btn-primary" data-toggle="tooltip" data-placement="buttom" title="To update Restaurant's info">UPDATE</a>
 						<a href="{% url 'delete_rest' Restaurant_id=item.id %}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="To Delete this Restaurant">DELETE</a>
 					</div>
-					
+								
 				</div>
-		</div>
+			</div>
 		{% endfor %}
 	</div>
 	<div class="row">
@@ -42,4 +88,28 @@ Foodhub List
 		</div>
 	</div>
 </div>
-{% endblock %}
+ <script>
+	function Favourite(id){
+		$.ajax({
+			type: "GET",
+			url: "/fav/"+id,
+			error:function(){
+				console.log("Error, something went wrong!");
+			},
+			success:function(data){
+				console.log(data);
+				$("#fav-count-"+id).text(data.count);
+				if(data.action==="Favourited"){
+					$("#fav-color-"+id).addClass("text-warning");
+				}
+				else {
+					$("#fav-color-"+id).removeClass("text-warning");
+				}
+			}
+		})
+	}
+</script>  
+{% endblock content %}
+
+
+ 

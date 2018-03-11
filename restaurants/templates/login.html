@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
-{% block tilte %}
-Foodhub
+{% load crispy_forms_tags %}
+
+{% block title %}
+	Login
 {% endblock %}
 
 {% block content %}
@@ -16,12 +18,12 @@ Foodhub
 	      <li class="nav-item active">
 	        <a class="nav-link text-white btn btn-primary" href="{% url 'restaurants_list' %}">Main Menu <span class="sr-only">(current)</span></a>
 	      </li>
-	      <!-- <li class="nav-item">
-	        <a class="nav-link" href="#">Link</a>
+	      <li class="nav-item">
+	        <a class="nav-link text-white btn btn-primary ml-3" href="{% url 'register' %}">Register</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link disabled" href="#">Disabled</a>
-	      </li> -->
+	        <a class="nav-link text-white btn btn-primary ml-3" href="#">Login</a>
+	      </li>
 	    </ul>
 	    <form class="form-inline my-2 my-lg-0">
 	      <input class="form-control mr-sm-2" type="search" placeholder="Search for..." aria-label="Search">
@@ -29,28 +31,13 @@ Foodhub
 	    </form>
 	  </div>
 	</nav>
-	<div class="col-md-12">
-		<h1><strong>More Details :</strong></h1>
+<div class="container">
+	<div class="col-md-12 bg-info text-white mt-3 md-3 px-3 p-3">
+		<form action="{% url 'login' %}" method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{form|crispy}}
+			<input type="submit" name="Sign up" class="btn btn-primary">
+		</form>
 	</div>
-	<div class="col-md-12">
-		<hr style="height:2px;background-color:black;border:none;" noshade />
-	<!-- {% if instance.image %}
-        <img src="{{details.image.url}}" alt="" class="img-fluid">
-    {% endif %} -->
-    	
-    	
-		<!-- {{details}} -->
-		<h4>Restaurant name : {{details}}</h4>
-		
-		<hr style="height:2px;background-color:black;border:none;" noshade />
-	</div>
-	<div class="col-md-12">
-		<a href="{% url 'restaurants_list' %}"><button type="button" class="btn btn-primary">Back</button></a>
-	</div>
-	<!-- <h1><strong>Chicken</strong></h4>
-	<h4>{{Chicken}}</h1>
-	<h1><strong>Steaks</strong></h4>
-	<h4>{{Steaks}}</h1>
-	<h1><strong>Fish</strong></h4>
-	<h4>{{Fish}}</h1> -->
-{% endblock content %}
+</div>
+{% endblock %}
